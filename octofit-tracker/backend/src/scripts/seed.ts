@@ -1,7 +1,7 @@
 import { connectDatabase, disconnectDatabase } from '../config/database.js';
 import { Activity, Team, User, Workout } from '../models/index.js';
 
-// Insere registros de demonstração estáveis sem apagar dados da aplicação.
+// Insere dados de demonstração estáveis, reconcilia equipes e não apaga dados da aplicação.
 async function upsertDemoUser(name: string, email: string, teamId: InstanceType<typeof Team>['_id'], fitnessGoal: string) {
   const previousUser = await User.findOne({ email }).select('_id team');
   if (previousUser?.team && previousUser.team.toString() !== teamId.toString()) {

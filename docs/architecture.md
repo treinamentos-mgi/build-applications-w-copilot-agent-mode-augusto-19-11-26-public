@@ -45,13 +45,13 @@ flowchart LR
 
 Registre seu plano aqui antes de editar o código.
 
-- Decisão da camada de apresentação:
-- Decisão da camada de lógica:
-- Decisão da camada de dados:
-- Abordagem para registro de atividades:
-- Abordagem para gerenciamento de equipes:
-- Abordagem para o placar:
-- Abordagem para sugestões de treino:
+- Decisão da camada de apresentação: React 19 com React Router em quatro rotas (`/activities`, `/teams`, `/leaderboard`, `/workouts`), consumindo `/api` pelo proxy do Vite. Cada rota exibe `role="status"` com "Carregando…" durante a espera, texto de estado vazio quando a lista vem vazia e `role="alert"` com mensagem de indisponibilidade em caso de falha.
+- Decisão da camada de lógica: as rotas em `routes/api.ts` apenas recebem e respondem HTTP, delegando regras a `services/octofitService.ts`. Erros de validação e de referências ausentes são convertidos em 4xx, nunca em 500.
+- Decisão da camada de dados: modelos Mongoose `User`, `Team`, `Activity` e `Workout` com campos obrigatórios conforme o contrato de dados (nome, e-mail e meta; nome e mascote; relações, tipo, minutos, pontos e data; foco, duração e dificuldade). `seed.ts` usa esses modelos e é idempotente, sem apagar registros não relacionados.
+- Abordagem para registro de atividades: validar `userId` e `teamId` como ObjectIds antes de consultar (malformados retornam `400`); confirmar que a pessoa e a equipe existem (ausentes retornam `404`); calcular `points` (1 ponto por minuto) e `occurredAt` no servidor; responder `201` com `user`, `team`, `type` e `minutes` enviados.
+- Abordagem para gerenciamento de equipes: `POST /api/teams` exige `name` (ausente retorna `400`), guarda `name` e `mascot` como enviados e aceita `members` como lista de IDs de pessoas, gravados em `Team.members`; `GET` retorna as equipes com seus integrantes.
+- Abordagem para o placar: agregar no MongoDB a soma de `points` das atividades por equipe, incluir o `teamName`, ordenar por `totalPoints` decrescente e atribuir `rank` sequencial começando em 1.
+- Abordagem para sugestões de treino: buscar a pessoa por e-mail (ausente retorna `404`); definir o foco pelo tipo da atividade mais recente (corrida e ciclismo geram foco `endurance`, força gera `strength`), usando a meta `fitnessGoal` como alternativa quando não houver atividades; listar primeiro os treinos desse foco, com `reason` citando a atividade recente.
 
 ## Plano de testes
 
