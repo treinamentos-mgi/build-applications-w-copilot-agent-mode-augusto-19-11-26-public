@@ -62,3 +62,4 @@ Registre os comandos executados e o significado de cada falha.
 - Testes do frontend: `npm test --prefix octofit-tracker/frontend`
 - Compilação do backend: `npm run build --prefix octofit-tracker/backend`
 - Compilação do frontend: `npm run build --prefix octofit-tracker/frontend`
+- Verificação final local: `node .github/scripts/grade-step.mjs step5-final` passou, com contratos de dados 5/5, API 4/4 e frontend 15/15.
