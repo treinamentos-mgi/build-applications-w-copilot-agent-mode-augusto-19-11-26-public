@@ -43,6 +43,7 @@ describe('Contrato de dados do OctoFit', () => {
     expect(error?.errors.difficulty).toBeDefined();
   });
 
+  // idempotently: executar o seed mais de uma vez deve preservar os registros sem duplicação.
   it('insere dados representativos para as quatro capacidades de forma idempotente', async () => {
     const mongo = await MongoMemoryServer.create();
     const previousUri = process.env.MONGODB_URI;
