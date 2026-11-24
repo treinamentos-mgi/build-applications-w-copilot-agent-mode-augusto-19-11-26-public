@@ -26,7 +26,7 @@ export default function Teams() {
         {state.status === 'ready' && state.teams.length > 0 && (
           <ul className="list-unstyled mb-0">
             {state.teams.map((team, index) => (
-              <li key={index}>{team.name}: {team.members.join(', ')}</li>
+              <li key={index}>{team.name}: {team.members.length} integrantes</li>
             ))}
           </ul>
         )}

@@ -128,7 +128,7 @@ export async function suggestWorkouts(userEmail: string) {
       ? 'Compatível com seu objetivo e padrão de atividades de força'
       : focus === 'mobility'
         ? 'Compatível com seu objetivo de mobilidade e atividade física'
-        : 'Compatível com seu objetivo de resistência e sua atividade de corrida',
+        : 'Compatível com seu objetivo de resistência e sua atividade recente',
   }));
 }
 

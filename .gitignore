@@ -37,3 +37,6 @@ __pycache__/
 
 # Vite build output
 dist/
+
+# vitest cache
+.vite/
